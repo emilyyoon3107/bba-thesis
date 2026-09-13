@@ -1,0 +1,6 @@
+FEC/raw/*.csv
+FEC/candidates_master.csv
+FEC/comm_for_manual_screening.csv
+FEC/committees_selected.csv
+PSID/J362369.txt
+PSID/J362369.dta

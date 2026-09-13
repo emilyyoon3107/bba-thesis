@@ -1,0 +1,42 @@
+{
+\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\begin{tabular}{l*{6}{c}}
+\toprule
+                    &\multicolumn{1}{c}{(1)}&\multicolumn{1}{c}{(2)}&\multicolumn{1}{c}{(3)}&\multicolumn{1}{c}{(4)}&\multicolumn{1}{c}{(5)}&\multicolumn{1}{c}{(6)}\\
+                    &\multicolumn{1}{c}{stockhold}&\multicolumn{1}{c}{stockhold}&\multicolumn{1}{c}{stockhold}&\multicolumn{1}{c}{stockhold}&\multicolumn{1}{c}{stockhold}&\multicolumn{1}{c}{stockhold}\\
+\midrule
+ln(Income)          &       0.033\sym{***}&       0.032\sym{***}&       0.034\sym{***}&       0.034\sym{***}&       0.033\sym{***}&       0.032\sym{***}\\
+                    &     (0.003)         &     (0.003)         &     (0.003)         &     (0.003)         &     (0.003)         &     (0.003)         \\
+\addlinespace
+ln(Wealth)          &       0.116\sym{***}&       0.116\sym{***}&       0.116\sym{***}&       0.116\sym{***}&       0.116\sym{***}&       0.116\sym{***}\\
+                    &     (0.005)         &     (0.005)         &     (0.005)         &     (0.005)         &     (0.005)         &     (0.005)         \\
+\addlinespace
+1(College)          &       0.145\sym{***}&       0.145\sym{***}&       0.146\sym{***}&       0.146\sym{***}&       0.145\sym{***}&       0.145\sym{***}\\
+                    &     (0.007)         &     (0.007)         &     (0.007)         &     (0.007)         &     (0.007)         &     (0.007)         \\
+\addlinespace
+Age                 &       0.009\sym{***}&       0.008\sym{***}&       0.009\sym{***}&       0.009\sym{***}&       0.008\sym{***}&       0.008\sym{***}\\
+                    &     (0.002)         &     (0.003)         &     (0.002)         &     (0.002)         &     (0.003)         &     (0.003)         \\
+\addlinespace
+1(Male)             &      -0.004         &      -0.004         &      -0.004         &      -0.004         &      -0.004         &      -0.004         \\
+                    &     (0.006)         &     (0.006)         &     (0.006)         &     (0.006)         &     (0.006)         &     (0.006)         \\
+\addlinespace
+STDIR(A)            &      -0.042\sym{***}&                     &                     &                     &      -0.043\sym{***}&                     \\
+                    &     (0.012)         &                     &                     &                     &     (0.012)         &                     \\
+\addlinespace
+STDIR(N)            &                     &      -0.066\sym{***}&                     &                     &                     &      -0.067\sym{***}\\
+                    &                     &     (0.015)         &                     &                     &                     &     (0.016)         \\
+\addlinespace
+STALG(A)            &                     &                     &       0.003         &                     &      -0.003         &                     \\
+                    &                     &                     &     (0.004)         &                     &     (0.004)         &                     \\
+\addlinespace
+STALG(N)            &                     &                     &                     &       0.009\sym{*}  &                     &      -0.005         \\
+                    &                     &                     &                     &     (0.005)         &                     &     (0.005)         \\
+\addlinespace
+FEDIR               &                     &                     &                     &                     &      -0.094\sym{***}&      -0.119\sym{***}\\
+                    &                     &                     &                     &                     &     (0.005)         &     (0.008)         \\
+\midrule
+Obs.                &      86,066         &      86,066         &      86,066         &      86,066         &      86,066         &      86,066         \\
+R-sq                &       0.207         &       0.207         &       0.206         &       0.206         &       0.207         &       0.207         \\
+\bottomrule
+\end{tabular}
+}

@@ -1,0 +1,103 @@
+% !TEX root = ../main.tex
+
+\section{Construction of FEC Contribution Share Variables}
+\label{sec:appendix_fecscreen}
+
+This appendix provides a formal breakdown of the algorithm and filtering methodology used to construct the state-level political orientation metrics from the Federal Election Commission (FEC) campaign finance datasets. The screening framework eliminates intra-party conflict, non-individual contributions, conduit noise, and issue-based Political Action Committees (PACs) to accurately extract grassroots partisan leaning across presidential election years (1996, 2000, 2004, 2008, 2012, 2016, 2020).
+
+\subsection{Candidate Filtering and Identification}
+To isolate contributions that reflect general election partisan alignment, the candidate master universe is first restricted to the two major parties: Democrats (\texttt{DEM}) and Republicans (\texttt{REP}). For presidential cycles, inclusion is strictly limited to the ultimate primary winners who advanced to the general election, following \citet{meeuwis2022}. This prevents heightend intra-party competition (e.g., primary campaigns) from inflating a state's partisan polarization index. Voters supporting a losing primary candidate do not necessary support the general election nominee, and thus their contributions are not indicative of the state's overall partisan leaning in the general election.
+
+Let $\mathcal{C}_t$ denote the set of valid presidential candidates in election cycle $t$:
+\begin{align*}
+    \mathcal{C}_{1996} &= \{\text{Bill Clinton (DEM)}, \text{Bob Dole (REP)}\} \\
+    \mathcal{C}_{2000} &= \{\text{Al Gore (DEM)}, \text{George W. Bush (REP)}\} \\
+    \mathcal{C}_{2004} &= \{\text{John Kerry (DEM)}, \text{George W. Bush (REP)}\} \\
+    \mathcal{C}_{2008} &= \{\text{Barack Obama (DEM)}, \text{John McCain (REP)}\} \\
+    \mathcal{C}_{2012} &= \{\text{Barack Obama (DEM)}, \text{Mitt Romney (REP)}\} \\
+    \mathcal{C}_{2016} &= \{\text{Hillary Clinton (DEM)}, \text{Donald Trump (REP)}\} \\
+    \mathcal{C}_{2020} &= \{\text{Joe Biden (DEM)}, \text{Donald Trump (REP)}\}
+\end{align*}
+
+\subsection{Multi-Stage Committee Screening Algorithm}
+Committees ($c$) are classified into one of four categories: Democratic (\texttt{DEM}), Republican (\texttt{REP}), Excluded (\texttt{EXC}), or Indeterminate (\texttt{IND}). Classification follows a four-step sequence:
+
+\subsubsection{Stage 1: Institutional Code Classification}
+Initial filtering relies on the FEC committee type designations (\texttt{cmte\_tp}):
+\begin{itemize}
+    \item \texttt{EXC}: Communication costs (\texttt{C}), presidential primaries (\texttt{D}), electioneering communications (\texttt{E}), house committees (\texttt{H}), independent expenditors (\texttt{I}), and senate committees (\texttt{S}) are definitively removed.
+    \item Committees categorized as party organizations (\texttt{X}, \texttt{Y}, \texttt{Z}) are automatically mapped to \texttt{DEM} or \texttt{REP} matching their reported party affiliation (\texttt{cmte\_pty\_affiliation}). If they report any other party affiliation, they are marked \texttt{EXC}.
+    \item Standard PACs (\texttt{N}, \texttt{Q}), Super PACs (\texttt{O}), Hybrid PACs (\texttt{V}, \texttt{W}), single-candidate independent entities (\texttt{U}), and core presidential committees (\texttt{P}) are set as \texttt{IND} and sent to the next stage.
+\end{itemize}
+
+\subsubsection{Stage 2: Official Candidate Linkage}
+For any committee still marked \texttt{IND}, if it possesses an official candidate link (\texttt{cand\_id}):
+\begin{equation}
+    \text{Status}(c) = \begin{cases} 
+        \texttt{DEM} & \text{if } \texttt{cand\_id}_c \in \mathcal{C}_t \text{ and Party}(\texttt{cand\_id}_c) = \texttt{DEM} \\
+        \texttt{REP} & \text{if } \texttt{cand\_id}_c \in \mathcal{C}_t \text{ and Party}(\texttt{cand\_id}_c) = \texttt{REP} \\
+        \texttt{EXC} & \text{if } \texttt{cand\_id}_c \notin \mathcal{C}_t \text{ and } \texttt{cand\_id}_c \neq \emptyset \\
+        \texttt{IND} & \text{otherwise} \\
+    \end{cases}
+\end{equation}
+
+\subsubsection{Stage 3: Unofficial Linkage via Independent Expenditures}
+For unlinked PACs, behavior is inferred using individual transaction data from the independent expenditure files (\texttt{pas2}). Valid expenditures supporting or opposing candidates are quantified. Let $N_{\text{for}, p}$ and $A_{\text{for}, p}$ represent the total transaction count and aggregate dollar volume spent \textit{supporting} party $p \in \{\text{DEM}, \text{REP}\}$, and let $N_{\text{agt}, p}$ and $A_{\text{agt}, p}$ represent expenditure amounts spent \textit{opposing} party $p$. 
+
+We construct committee-level two directional indexes normalized to $[-1, 1]$, where $+1$ represents purely Republican support and $-1$ represents purely Democratic support:
+\begin{equation}
+    \mathcal{I}_{n}(c) = 2 \times \left( \frac{N_{\text{for, REP}} + N_{\text{agt, DEM}}}{N_{\text{total}}} \right) - 1
+\end{equation}
+\begin{equation}
+    \mathcal{I}_{\text{sum}}(c) = 2 \times \left( \frac{A_{\text{for, REP}} + A_{\text{agt, DEM}}}{A_{\text{total}}} \right) - 1
+\end{equation}
+Committees with extreme, uniform alignment are captured as partisan vehicles:
+\begin{equation}
+    \text{Status}(c) = \begin{cases} 
+        \texttt{DEM} & \text{if } \mathcal{I}_{n}(c) \le -0.75 \text{ and } \mathcal{I}_{\text{sum}}(c) \le -0.75 \\
+        \texttt{REP} & \text{if } \mathcal{I}_{n}(c) \ge 0.75 \text{ and } \mathcal{I}_{\text{sum}}(c) \ge 0.75 
+    \end{cases}
+\end{equation}
+
+\subsubsection{Stage 4: Text-Pattern Regex Targeted Capture}
+Remaining \texttt{IND} committees are passed through a case-insensitive regular expression keyword check targeting party infrastructure and candidate names:
+\begin{itemize}
+    \item {Democratic Keywords}: Candidate last names in $\mathcal{C}_{t,\text{DEM}}$, \texttt{DNC}, \texttt{DSCC}, \texttt{DCCC}, \texttt{DEMOCRATIC}, \texttt{DEMOCRAT(S)}, \texttt{SENATE MAJORITY PAC}, \texttt{HOUSE MAJORITY PAC}.
+    \item {Republican Keywords}: Candidate last names in $\mathcal{C}_{t,\text{REP}}$, \texttt{RNC}, \texttt{NRSC}, \texttt{NRCC}, \texttt{GOP}, \texttt{REPUBLICAN(S)}, \texttt{CONGRESSIONAL LEADERSHIP FUND}, \texttt{SENATE LEADERSHIP FUND}.
+\end{itemize}
+
+\subsubsection{Stage 5: Secondary Manual Screening and Overrides}
+To guarantee that the selected active portfolio isolates core partisan alignment without introducing non-comparable baseline noise, a targeted manual screening is applied to high-volume committees:
+\begin{itemize}
+    \item Automated intermediary fundraising platforms (e.g., \texttt{ACTBLUE}) are explicitly set to \texttt{EXC} to eliminate baseline inflation, as individual allocations are already captured downstream at their final committee destinations.
+    \item Ideological PACs that frequently back internal party primary candidates or prioritize single-issue advocacy (e.g., \texttt{EMILY'S LIST}, \texttt{FAIR FIGHT}, \texttt{AMERICANS FOR PROSPERITY ACTION}, \texttt{CLUB FOR GROWTH ACTION}) are systematically marked \texttt{EXC}.
+    \item Industry-specific lobbying coalitions and profession-based bodies (e.g., automotive dealers, realtors, law associations, or corporate consulting PACs) are marked \texttt{EXC}..
+    \item Specialized party or candidate-adjacent Super PACs with atypical names (e.g., \texttt{COMMITTEE FOR CHANGE}, \texttt{SMP}, \texttt{TAKE BACK THE HOUSE 2020}) are manually preserved as \texttt{DEM} or \texttt{REP} following manual verification.
+\end{itemize}
+
+\subsubsection{Final Set of committees}
+\Cref{tab:B1} lists ten of the finally selected committees for each year, ordered by the number of total valid contributions. 
+
+\input{tables/tbB1.tex}
+
+\subsection{Individual Contribution Level Processing}
+Once the final set of partisan committees ($\mathcal{M}_{\text{DEM}, t}, \mathcal{M}_{\text{REP}, t}$) is confirmed, individual transactional receipts (\texttt{itcont}) are cleaned and processed according to strict data audit constraints:
+\begin{enumerate}
+    \item Only explicit, valid individual contribution and refund transaction types are retained (\texttt{10}, \texttt{11}, \texttt{15}, \texttt{15E}, \texttt{21Y}, \texttt{22Y}).
+    \item Transactions that are clearly not individual (neither $\texttt{entity\_tp} = \texttt{"IND"}$ nor is missing). Transactions with an \texttt{other\_id} link are dropped to remove simple inter-organizational transfers.
+    \item Contributions are filtered by geography to keep only donors with a verified residency code corresponding to the 50 US States or Washington, D.C..
+    \item To properly measure total economic support, refund entries (\texttt{21Y}, \texttt{22Y}) are mathematically converted to negative absolute values before aggregation.
+\end{enumerate}
+
+\subsection{Aggregation and Variable Metrics}
+Valid transactions are aggregated to the state level using the donor's reported state residency code ($s \in \{\text{50 US States}, \text{DC}\}$). For each state $s$ and election cycle $t$, metrics are calculated in two methods ($X$): Net Dollar Amount (\texttt{tot\_amt}, postivie contributions amount net of refunds) and Strictly Positive Contribution Count (\texttt{n\_trans\_pos}, only counting strictly positive contributions). 
+
+The metric for the Republican share of contributions is defined as:
+\begin{equation}
+    \text{Share}_{X, s, t} = \frac{X_{\text{REP}, s, t}}{X_{\text{REP}, s, t} + X_{\text{DEM}, s, t}}
+\end{equation}
+To calculate the finalized political alignment variable ($\text{STDIR}_{X, s, t}$), the shares are scaled linearly to fall within the $[-1, 1]$ interval:
+\begin{equation}
+    \text{STDIR}_{X, s, t} = 2 \times \text{Share}_{X, s, t} - 1
+\end{equation}
+A final value of $+1$ indicates an entirely Republican contributing base and $-1$ represents an entirely Democratic base.

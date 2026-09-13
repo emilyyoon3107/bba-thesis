@@ -1,0 +1,74 @@
+\begin{sidewaystable}[htbp]
+    \centering
+    \caption{PSID Wave-Specific Variable Codes}
+    \label{tab:A1}
+    \footnotesize
+    
+    \begin{tabularx}{\textheight}{@{} l l X c X @{}}
+    \toprule
+    \textbf{Final Variable} & \textbf{Base Variable} & \textbf{Definition \& Construction} & \textbf{Years} & \textbf{Variable Codes (from old to recent)} \\
+    \midrule
+    
+    \textbf{\texttt{stockhold}} & \texttt{wthstckimptf} & Binary indicator for direct stock ownership. Set to 1 if \texttt{wthstckimptf} == 1. & 1999--2023 & S410 S510 S610 S710 S810 ER46952 ER52356 ER58169 ER65366 ER71443 ER77469 ER81796 ER85650 \\
+    \addlinespace
+    
+    \textbf{\texttt{stockshare}} & \texttt{wthstckimpval} & Numerator for stock share calculation. & 1999--2023 & S411 S511 S611 S711 S811 ER46954 ER52358 ER58171 ER65368 ER71445 ER77471 ER81798 ER85652 \\
+    \addlinespace
+    
+     & \texttt{wthcashbondimpval} & Denominator component for financial assets (1999-2017). & 1999--2017 & S405 S505 S605 S705 S805 ER46942 ER52350 ER58161 ER65358 ER71435 \\
+    \addlinespace
+    
+     & \texttt{wthcashimpval} & Denominator cash component for financial assets (2019-2023). & 2019--2023 & ER77457 ER81784 ER85638 \\
+    \addlinespace
+    
+    & \texttt{wthbondimpval} & Denominator bond component for financial assets (2019-2023). & 2019--2023 & ER77461 ER81788 ER85642 \\
+    \addlinespace
+    
+    \textbf{\texttt{stockhold\_tot}} & \texttt{retirementalloc} & IRA/Annuity component for broad stockholding indicator. & 1999--2023 & ER15013 ER19209 ER22589 ER26570 ER37588 ER43579 ER48904 ER54654 ER61765 ER67818 ER73841 ER79963 ER83932 \\
+    \addlinespace
+    
+     & \texttt{pensionallochd} & Head pension component for broad stockholding indicator. & 1999--2023 & ER15182 ER19350 ER22745 ER26726 ER37766 ER43739 ER49085 ER54841 ER61961 ER68015 ER74041 ER80164 ER84134 \\
+    \addlinespace
+    
+     & \texttt{pensionallocsp} & Spouse pension component for broad stockholding indicator. & 1999--2023 & ER15328 ER19493 ER22889 ER26870 ER37998 ER43971 ER49304 ER55057 ER62178 ER68232 ER74248 ER80370 ER84340 \\
+
+    \bottomrule
+    \end{tabularx}
+\end{sidewaystable}
+
+\begin{sidewaystable}[htbp]
+    \centering
+    \ContinuedFloat
+    \caption[]{PSID Wave-Specific Variable Codes (Cont.)}
+    \footnotesize
+    
+    \begin{tabularx}{\textheight}{@{} l l X c X @{}}
+    \toprule
+    \textbf{Final Variable} & \textbf{Base Variable} & \textbf{Definition \& Construction} & \textbf{Years} & \textbf{Variable Codes (from old to recent)} \\
+    \midrule
+    
+    \textbf{\texttt{lnincome}} & \texttt{incfamilytotal} & Natural log of total family income. & 1999--2023 & ER16462 ER20456 ER24099 ER28037 ER41027 ER46935 ER52343 ER58152 ER65349 ER71426 ER77448 ER81775 ER85629 \\
+    \addlinespace
+    
+    \textbf{\texttt{lnwealth}} & \texttt{wthtotinclheq} & Natural log of total family wealth. & 1999--2023 & S417 S517 S617 S717 S817 ER46970 ER52394 ER58211 ER65408 ER71485 ER77511 ER81838 ER85692 \\
+    \addlinespace
+    
+    \textbf{\texttt{college}} & \texttt{eduhdcoldegtf} & Binary indicator for household head possessing a college degree. & 1999--2023 & ER15952 ER20013 ER23450 ER27417 ER40589 ER46567 ER51928 ER57684 ER64836 ER70908 ER76923 ER81170 ER85147 \\
+    \addlinespace
+    
+    \textbf{\texttt{age}} & \texttt{agehd} & Age of Household Head (excluding missing values coded as 999). & 1999--2023 & ER13010 ER17013 ER21017 ER25017 ER36017 ER42017 ER47317 ER53017 ER60017 ER66017 ER72017 ER78017 ER82018 \\
+    \addlinespace
+    
+    \textbf{\texttt{male}} & \texttt{sexhd} & Binary indicator for male household head (set to 1 if \texttt{sexhd} == 1). & 1999--2023 & ER13011 ER17014 ER21018 ER25018 ER36018 ER42018 ER47318 ER53018 ER60018 ER66018 ER72018 ER78018 ER82019 \\
+    \addlinespace
+    
+    \textbf{\texttt{state}} & \texttt{currfips} & US State FIPS Code (values 1 through 56). & 1999--2023 & ER13005 ER17005 ER21004 ER25004 ER36004 ER42004 ER47304 ER53004 ER60004 ER66004 ER72004 ER78004 ER82004 \\
+    \addlinespace
+    
+    \textbf{\texttt{seqnum}} & \texttt{seqnumY} & Filtering variable to isolate Household Heads (\texttt{seqnum} == 1). & 1999--2023 & ER33502 ER33602 ER33702 ER33802 ER33902 ER34002 ER34102 ER34202 ER34302 ER34502 ER34702 ER34902 ER35102 \\
+    \addlinespace
+    
+    \textbf{\texttt{currfamid}} & \texttt{idfam} & Current wave-specific family ID construction. & 1999--2023 & ER13002 ER17002 ER21002 ER25002 ER36002 ER42002 ER47302 ER53002 ER60002 ER66002 ER72002 ER78002 ER82002 \\
+    \bottomrule
+    \end{tabularx}
+\end{sidewaystable}

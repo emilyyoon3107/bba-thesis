@@ -1,0 +1,256 @@
+% !TEX root = ../main.tex
+
+\section{Results}
+\label{sec:results}
+
+\subsection{Baseline Results}
+Before moving onto the main analysis, I first present baseline evidence that there are indeed persistent geographic differences in stock market participation (SMP). This step is necessary because \citet{chien2017} utilize a different dataset: state-level aggregates of IRS tax return data, where the state-level SMP rate is calculated as the fraction of tax returns with dividend income out of total tax returns filed.
+
+\Cref{tab:2} presents the baseline results. Columns 1 and 2 are linear probability models (LPM), while columns 3 and 4 are Probit models. The coefficients on the control variables are consistent with established household finance literature: wealth, income, and education all exhibit positive and highly significant effects on the likelihood of participation.Columns 1 and 3 include individual controls and time fixed effects, whereas columns 2 and 4 further include state fixed effects. 
+
+The test statistics and p-values reported are for the joint hypothesis test on the null that all state fixed effects are jointly zero. In both models, the p-value is close to zero, confirming the presence of persistent geographic differences in SMP. Specifically, in column 2 (LPM), the reported state joint statistic of 18.0 is from OLS and represents an F-test. In column 4 (Probit), the joint statistic of 490 is from maximum likelihood estimation with robust standard errors and represents a Wald test that follows a $\chi^2$ distribution. Both tests evaluate the null hypothesis that the state-specific intercepts are simultaneously zero, and both decisively reject it.
+
+Despite confirming the presence of geographic effects, these baseline models suffer from notable limitations regarding statistical and explanatory power. By relying solely on static state fixed effects, the specification functions as a "black box," failing to identify the actual underlying mechanisms. Consequently, the model lacks the explanatory power to detail why these geographic differences exist. This motivates the subsequent analysis stemming from the hypothesis that the "black box" of geographic differences in SMP is captured by state politics. 
+
+
+
+\begin{table}[htbp]
+\caption{Baseline Results}
+\label{tab:2}
+\begin{minipage}{\textwidth}
+    \small This table presents the baseline linear probability and probit models predicting stock market participation. The dependent variable is a binary indicator equal to one if the individual holds stocks, and zero otherwise. Continuous independent variables ln(Income), ln(Wealth), and Age are standardized to have mean zero and standard deviation one. 1(College) and 1(Male) are binary variables each equal to one if the representative person of the family has a college degree and is male, respectively. Time fixed effects are included. For probit models, the reported values are marginal effects evaluated at the mean of the independent variables. Robust standard errors clustered at the state level are reported in parentheses. *** p $<$ 0.01, ** p $<$ 0.05, * p $<$ 0.1.
+\end{minipage}
+
+\small
+
+\vspace{1ex}
+
+\input{tables/tb2.tex}
+
+\end{table}
+
+
+\subsection{Stock Market Participation}
+\label{sec:main_smp}
+
+% --- Table 3 ---
+% --- PAGE 1: PANEL A ---
+\begin{table}[htbp]
+    \centering
+    \caption{Stock Market Participation and State Politics}
+    \label{tab:3}
+
+    \begin{minipage}{\textwidth}
+    \small This table presents regression results for the determinants of stock market participation. Panel A uses linear probability models (LPM), while Panel B uses Probit models. The dependent variable is a binary indicator equal to one if the individual holds stocks, and zero otherwise. The independent variables STDIR(A) and STDIR(N) are state-level continuous measures of political direction, ranging from 1 (all Republican contributions) to -1 (all Democratic contributions). FEDIR is a binary time series variable equal to one if the president is a Republican and -1 if the president is a Democrat. STALG(A) and STALG(N) are the interaction terms between the state political direction variables and FEDIR Continuous control variables ln(Income), ln(Wealth), and Age are standardized to have mean zero and standard deviation one. 1(College) and 1(Male) are binary control variables each equal to one if the representative person of the family has a college degree and is male, respectively. Time fixed effects are included. For probit models, the reported values are marginal effects evaluated at the mean of the explanatory variables. Robust standard errors clustered at the state level are reported in parentheses. *** p $<$ 0.01, ** p $<$ 0.05, * p $<$ 0.1.
+    \end{minipage}
+
+    \small 
+
+    \vspace{1ex}
+    
+    \begin{subtable}{\textwidth}
+        \caption{Linear Probability Model (LPM)}
+        \label{tab:3a}
+        \input{tables/tb3A.tex}
+    \end{subtable}
+\end{table}
+
+% --- PAGE 2: PANEL B ---
+\begin{table}[htbp]
+    \ContinuedFloat
+    \centering
+
+    \caption[]{Stock Market Participation and State Politics (Cont.)}
+    
+    \small
+    
+    \begin{subtable}{\textwidth}
+        \caption{Probit Model}
+        \label{tab:3b}
+        \input{tables/tb3B.tex}
+    \end{subtable}
+    
+    \vspace{1ex}
+
+\end{table}
+
+
+\Cref{tab:3} presents the main results for the determinants of stock market participation, utilizing Linear Probability Models (LPM) in Panel A and Probit models in Panel B.
+
+Before evaluating the political variables, it is worth noting that the baseline household finance controls behave consistently with established theory across all specifications. Because the continuous variables are standardized, their coefficients represent the effect of a one standard deviation increase. A one standard deviation increase in log wealth massively boosts the probability of holding stocks by 11.6 to 15.7 percentage points, while a similar increase in log income raises the probability by roughly 3.1 to 3.4 percentage points. Educational attainment is also a powerful driver. Individuals with a college degree are 11.0 to 14.6 percentage points more likely to participate in the market.Interestingly, the coefficient for the male indicator is statistically insignificant across all columns in both panels. While unconditional demographic data sometimes highlights a gender gap in investing \citep{almenberg2015}, this insignificance is both acceptable and expected in this framework. As noted in \Cref{sec:summary_stats}, because the PSID operates at the family-year level, the gender of the representative person often reflects survey response dynamics rather than a strict measure of individual gender behavior. By controlling for income, wealth, and education, the model absorbs the underlying disparities that typically drive gender differences in financial participation. Additionally, Age exhibits a statistically significant but marginal effect, serving more as a necessary life-cycle control than a primary driver.
+
+Turning to the primary variables of interest, Columns 1 and 2 show that the absolute state political direction variables STDIR(A) and STDIR(N) have significant and negative coefficients. Because STDIR ranges from 1 (all Republican contributions) to -1 (all Democratic contributions), this negative coefficient indicates that, after controlling for individual characteristics and time fixed effects, individuals living in states with more Democratic contributions are more likely to hold stocks. This macro-level result seems to contradict the individual-level findings in prior literature demonstrating that right-leaning individuals are more likely to participate in the stock market \citep{kaustia2011, ke2024}. However, as will be elaborated in \Cref{sec:reconc}, this divergence is a manifestation of Simpson's paradox. The state-level aggregation masks the true individual-level behaviors, meaning these findings do not actually contradict established individual-level theories.
+
+Columns 3 and 4 introduce the state political alignment, or the interaction terms between state political direction and federal government direction (STALG(A) and STALG(N)). As seen in Column 4 of both panels, the STALG(N) specification yields a positive and statistically significant coefficient. At first glance, this positive significance might seem to support the partisan alignment effect documented in prior literature, which suggests individuals are more likely to invest when their political environments or personal preferences align with the party in power \citep{bonaparte2017, meeuwis2022}.
+
+However, Columns 5 and 6 reveal that this interpretation is premature. By including the baseline federal direction variable (FEDIR), the model controls for the time-series effect of the presidential party applied across all states. Once FEDIR is introduced, the coefficients on the alignment variables lose significance. This indicates that the initial significance observed in Column 4 was merely a confounded effect driven by the omission of the federal-level baseline.
+
+Instead, the dominant effect emerges directly from the FEDIR variable, which exhibits strong, negative, and highly significant coefficients across both models. Because FEDIR equals 1 during Republican presidencies, this implies that aggregate stock market participation within the sample is systematically lower under Republican administrations, holding all else constant. As will be in seen in \Cref{sec:reconc_alg}, this is likely a consequence of sample-specific coincidences between the timing of presidential terms and macroeconomic conditions that broadly suppressed stock market participation.
+
+\subsection{Equity Share}
+\label{sec:main_eqshare}
+
+% --- PAGE 1: PANEL A ---
+\begin{table}[htbp]
+    \centering
+    \caption{Equity Share and State Politics}
+    \label{tab:4}
+
+    \begin{minipage}{\textwidth}
+    \small This table presents regression results for the determinants of equity share among stock market participants. Panel A uses ordinary least squares (OLS), while Panel B uses fractional Probit models. The dependent variable is the proportion of financial assets held in stocks, from 0 to 1. The independent variables STDIR(A) and STDIR(N) are state-level continuous measures of political direction, ranging from 1 (all Republican contributions) to -1 (all Democratic contributions). FEDIR is a binary time series variable equal to one if the president is a Republican and -1 if the president is a Democrat. STALG(A) and STALG(N) are the interaction terms between the state political direction variables and FEDIR Continuous control variables ln(Income), ln(Wealth), and Age are standardized to have mean zero and standard deviation one. 1(College) and 1(Male) are binary control variables each equal to one if the representative person of the family has a college degree and is male, respectively. Time fixed effects are included. For probit models, the reported values are marginal effects evaluated at the mean of the explanatory variables. Robust standard errors clustered at the state level are reported in parentheses. *** p $<$ 0.01, ** p $<$ 0.05, * p $<$ 0.1.
+    \end{minipage}
+
+    \small 
+
+    \vspace{1ex}
+    
+    \begin{subtable}{\textwidth}
+        \caption{Ordinary Least Squares (OLS)}
+        \label{tab:4a}
+        \input{tables/tb4A.tex}
+    \end{subtable}
+\end{table}
+
+% --- PAGE 2: PANEL B ---
+\begin{table}[htbp]
+    \ContinuedFloat
+    \centering
+
+    \caption[]{Equity Share and State Politics (Cont.)}
+    
+    \small
+    
+    \begin{subtable}{\textwidth}
+        \caption{Fractional Probit Model}
+        \label{tab:4b}
+        \input{tables/tb4B.tex}
+    \end{subtable}
+
+\end{table}
+
+To further dissect the mechanisms driving these geographic differences, \Cref{tab:4} shifts the focus from the initial participation decision to the conditional asset allocation, examining the determinants of equity share among existing stock market participants. Panel A utilizes Ordinary Least Squares (OLS) regressions, while Panel B employs fractional Probit models to account for the dependent variable being bounded between 0 and 1.
+
+The most striking difference between \Cref{tab:3} and \Cref{tab:4} is the behavior of the state political direction variables. Unlike the results in \Cref{tab:3}, where STDIR exhibited a strong, highly significant relationship with the likelihood of market entry, columns 1 and 2 of \Cref{tab:4} reveal that STDIR largely loses its explanatory power when predicting the proportion of financial assets held in stocks. STDIR(N) becomes completely insignificant, and STDIR(A) retains only marginal significance at the 10\% level.
+
+This provides evidence against a risk aversion channel. Under standard portfolio theory, if state-level political environments are correlated with financial behavior as a proxy for individuals' fundamental risk aversion or risk perceptions, it would persistently affect both the extensive margin, or likelihood of participation, and the intensive margin, or conditional equity share. Specifically, heightened risk aversion would simultaneously lower the probability of market entry and reduce the optimal equity share for those who do choose to participate.
+
+Instead, standard portfolio models incorporate non-participation through the presence of fixed participation costs, such as the time and effort required for information acquisition, overcoming financial literacy barriers, or establishing trust in financial institutions. One-time participation costs only act as a hurdle to the initial entry decision and do not theoretically affect the subsequent optimization of the portfolio's risky share. Assuming investors are rational and optimize their portfolios after paying the fixed cost, the portfolio allocation to risky assets should be determined by risk profile only, not by the initial barrier to entry. Therefore, the lost significance of STDIR in \Cref{tab:4} strongly suggests that state political environments influence household decisions by modifying these fixed participation costs rather than altering fundamental risk preferences.
+
+Finally, consistent with the patterns observed in \Cref{tab:3}, the state-federal alignment interaction terms (STALG(A) and STALG(N)) remain statistically insignificant across all specifications in columns 3 and 4. Furthermore, when introduced in columns 5 and 6, the federal direction variable (FEDIR) maintains a highly significant negative coefficient, reinforcing the finding that not only is aggregate participation lower, but the conditional equity share is also systematically lower under Republican administrations within this sample. This suggests that the influence of FEDIR is through macroeconomic market conditions, in line with the explanation to be provided in \Cref{sec:reconc_alg}.
+
+
+\subsection{Robustness: X variable}
+\label{sec:robust_x}
+
+% --- Table 5 ---
+% --- PAGE 1: PANEL A ---
+\begin{table}[htbp]
+    \centering
+    \caption{State Politics as Election Results}
+    \label{tab:5}
+
+    \begin{minipage}{\textwidth}
+    \small This table shows the robustness of the results in \Cref{tab:2} and \Cref{tab:3} to different measure of state politics. Panel A uses linear probability models (LPM), while Panel B uses Probit models. In columns 1 to 3, the dependent variable is a binary indicator equal to one if the individual holds stocks, and zero otherwise. In columns 4 to 6, the dependent variable is the proportion of financial assets held in stocks. The independent variable STDIR(V) is a state-level continuous measure of political direction based on presidential vote shares, ranging from 1 (all Republican votes) to -1 (all Democratic votes). FEDIR is a binary time series variable equal to one if the president is a Republican and -1 if the president is a Democrat. STALG(V) is the interaction term between the state political direction variable and FEDIR. Control variables are identical to those in \Cref{tab:2} and \Cref{tab:3}. Time fixed effects are included. For probit models, the reported values are marginal effects evaluated at the mean of the explanatory variables. Robust standard errors clustered at the state level are reported in parentheses. *** p $<$ 0.01, ** p $<$ 0.05, * p $<$ 0.1.
+    \end{minipage}
+
+    \small 
+
+    \vspace{1ex}
+    
+    \begin{subtable}{\textwidth}
+        \caption{Linear Probability Model (LPM)}
+        \label{tab:5a}
+        \input{tables/tb5A.tex}
+    \end{subtable}
+\end{table}
+
+% --- PAGE 2: PANEL B ---
+\begin{table}[htbp]
+    \ContinuedFloat
+    \centering
+
+    \caption[]{State Politics as Election Results (Cont.)}
+    
+    \small
+    
+    \begin{subtable}{\textwidth}
+        \caption{Fractional Probit Model}
+        \label{tab:5b}
+        \input{tables/tb5B.tex}
+    \end{subtable}
+\end{table}
+
+
+\Cref{tab:5} presents a robustness check utilizing an alternative measure of state political environments. A valid theoretical concern regarding the use of FEC contribution data is that financial donations are inherently restricted to individuals with sufficient disposable income. Consequently, contribution metrics might disproportionately reflect the preferences of wealthier residents rather than the true, underlying political composition of the state's broader population. This concern is also addressed in \citet{meeuwis2022}, from which the FEC contribution variables are sourced. Their justification for using the contribution data is that it reflects the true political party preferences without the influence of specific issues covered by candidate campaigns, but they do show that their findings are robust to using vote shares as an alternative measure. Accordingly, \Cref{tab:5} replaces the contribution-based measures with STDIR(V), a state-level political direction variable derived directly from presidential vote shares.
+
+The presidential vote data is sourced from the MIT Election Data and Science Lab \citep{votesdb}. At PSID survey year $t$ (odd year), the state-level vote shares are taken from the most recent presidential election, which occurs in year $t-1$ or $t-3$ (even years). The share of Republican votes is scaled to the range of -1 to 1 to match the construction of the contribution-based STDIR variables. The alignment variable STALG(V) is similarly defined as the interaction between STDIR(V) and FEDIR.
+
+\begin{align*}
+    STDIR(V)_{s,t} &= \frac{Votes_{Rep} }{Votes_{Rep} + Votes_{Dem}} \times 2 - 1 \\
+    STALG(V)_{s,t} &= STDIR(V)_{s,t} \times FEDIR_t
+\end{align*}
+
+
+The analysis confirms that all major conclusions remain perfectly consistent when using voting data. In the extensive margin models predicting stock market participation. Panel A uses linear probability models or OLS, while Panel B uses Probit-based models. Columns 1 through 3 replicate the specifications from \Cref{tab:3}.
+In column 1, STDIR(V) yields highly significant, negative coefficients. The state-federal alignment effect behaves identically to prior models. While STALG(V) initially appears positive and significant in Column 2, introducing the federal baseline (FEDIR) in Column 3 absorbs this effect, rendering the alignment interaction statistically insignificant in the LPM and only marginally significant in the Probit model. FEDIR itself remains persistently negative and highly significant, reaffirming that the uniform time-series effect of the presidential administration dominates any state-level alignment benefits.
+
+Shifting to the equity share regressions in columns 4 through 6, \Cref{tab:5} exactly mirrors the findings from \Cref{tab:4}. When predicting the conditional equity share among active investors, both direction STDIR(V) and alignment STALG(V) lose all statistical significance. This reinforces the argument against the risk aversion channel, or that state-level political environments influence the fixed, one-time costs of market entry rather than altering fundamental, ongoing risk preferences.
+
+Overall, the results from \Cref{sec:main_smp} and \Cref{sec:main_eqshare} are robust to using an alternative measure of the independent variable. Because the structural relationships, directional signs, and theoretical implications hold seamlessly when transitioning from financial donor data to broad electorate data, it is clear that the results are not driven by sample selection bias within the donor pool. Therefore, using the granular FEC contribution variables in the primary analysis is well justified. 
+
+
+\subsection{Robustness: Y variable}
+\label{sec:robust_y}
+
+% --- Table 6 ---
+% --- PAGE 1: PANEL A ---
+\begin{sidewaystable}[htbp]
+    \centering
+    \caption{Comprehensive Stock Market Participation Variations}
+    \label{tab:6}
+
+    \begin{minipage}{\textheight}
+        \small This table presents regression results for various comprehensive measures of stock market participation. Panel A uses linear probability models (LPM), while Panel B uses Probit models. In columns 1 through 4, the dependent variable is $STOCKHOLD_{TOT}$, indicating stock holding through any channel. In columns 5 through 8, the dependent variable indicates is $STOCKHOLD_{IRA}$, indicating stock holdings through independent retirement accounts, and in columns 9 through 12, the dependent variable $STOCKHOLD_{PEN}$ indicates stock holdings through employer-supported pension plans. The independent variables, control variables and presentation methods are identical to those in \Cref{tab:3}. Robust standard errors clustered at the state level are reported in parentheses. *** $p<0.01$,  $p<0.05$, * $p<0.1$.  
+    \end{minipage}
+    
+    % Use footnotesize for 12 columns to prevent overlapping
+    \footnotesize 
+    
+    \begin{subtable}{\linewidth}
+        \caption{Linear Probability Model (LPM)}
+        \label{tab:6a}
+        \input{tables/tb6A.tex}
+    \end{subtable}
+\end{sidewaystable}
+
+% --- PAGE 2: PANEL B ---
+\begin{sidewaystable}[htbp]
+    \ContinuedFloat
+    \centering
+
+    \caption[]{Comprehensive Stock Market Participation Variations (Cont.)}
+    
+    \footnotesize
+    
+    \begin{subtable}{\linewidth}
+        \caption{Probit Model}
+        \label{tab:6b}
+        \input{tables/tb6B.tex}
+    \end{subtable}
+    
+\end{sidewaystable}
+
+
+Prior studies examining stock market participation and politics, such \citet{kaustia2023} and \citet{ke2024}, frequently rely on total participation metrics that blend direct stock holdings with retirement and pension plans. The baseline tests in this study, however, intentionally focused exclusively on strictly direct holdings, excluding those retirement and pension accounts. The rationale is that participation in employer-sponsored accounts is heavily influenced by employers and their policies, making them a noisy proxy for active, individual financial decision-making.
+
+Indeed, there is an abundant literature on the profound impact of employer plan design on retirement savings behavior, validating this distinction. For example, employer matching structures have been shown to heavily dictate aggregate portfolio allocations due to mental accounting \citep{brown2004, choi2009}. Moreover, participation and asset allocation within these plans are largely driven by inertia and the stickiness of default settings. Employees overwhelmingly retain their assigned default savings rates and investment vehicles \citep{choi2001}, set by their employer. As recently demonstrated by \citet{choukhmane2025}, this behavioral friction is so powerful that an employer's choice of default allocation largely overrides and masks an individual's true risk preferences. Furthermore, an employer's default policy choice is often influenced by the political environment of the state in which the company is headquartered. Consequently, combining these employer-influenced accounts with direct holdings would dilute the effect of state politics on active, individual financial behavior.
+
+To ensure the robustness of these baseline findings and to allow for direct comparisons with prior literature, \Cref{tab:6} introduces expanded participation metrics. Alongside the original $STOCKHOLD$ indicator, the analysis constructs three new variables. $STOCKHOLD_{IRA}$ is equal to one if the individual holds stocks within an IRA or annuity account. $STOCKHOLD_{PEN}$ indicates whether they hold stocks in employer-supported pension plans. $STOCKHOLD_{TOT}$ is a comprehensive indicator capturing total participation, equal to one if the individual holds stocks directly or in either of the aforementioned accounts. See \Cref{sec:appendix_psid} for detailed variable construction processes and the corresponding PSID variable codes. Note that because the amount allocated to stocks within IRAs and pension plans are only provided as a rough range, the comprehensive equity share variable cannot be constructed. Therefore, these robustness checks are restricted strictly to the binary participation decision. 
+
+\Cref{tab:6} presents the regression results for these comprehensive variations using Linear Probability Models (Panel A) and Probit Models (Panel B). From columns 1, 6, and 10, STDIR(A) is insigificant in all of $STOCKHOLD_{TOT}$, $STOCKHOLD_{IRA}$, and $STOCKHOLD_{PEN}$. Conversely, the STDIR(N) variable remains negative and significant for $STOCKHOLD_{TOT}$. This is in line with the argument in \citet{meeuwis2022} that the number of contributions is a more reliable measure because the amount-based measure can be heavily skewed by a small number of big donors. 
+
+Still, STDIR(N) does lose significance for $STOCKHOLD_{IRA}$ in the Probit model and for $STOCKHOLD_{PEN}$ in both models. This suggests that the significance in $STOCKHOLD_{TOT}$ is primarily driven by the direct stockholding component. That is, state political environments do influence the overall likelihood of stock market participation, but primarily through direct holdings rather than retirement accounts. The lack of significance in the IRA and pension models reinforces the argument that these accounts are more influenced by institutional factors and employer policies than by individual-level political environments.
+
+Another interesting finding is that for $STOCKHOLD_{PEN}$ in the Probit model, ln(Wealth) becomes statistically insignificant. This is consistent with the notion that pension plan participation is largely determined by the income package rather than individual wealth levels. 
+
+These outcomes provide compelling empirical validation for the initial study design. The lack of a significant political effect on IRA and pension participation, combined with the irrelevance of personal wealth in determining pension enrollment, aligns with the premise that these financial vehicles represent employer default options rather than voluntary individual choices. Consequently, the decision to restrict the baseline analysis to strictly direct, voluntary stockholdings ensures the model accurately captured the mechanics of intentional household financial behavior without being confounded by institutional defaults.

@@ -1,0 +1,79 @@
+% !TEX root = ../main.tex
+
+\section{Data and Methodology}
+This section describes the data sources, cleaning methods, and variable construction processes. Two primary datasets are utilized: the Panel Study of Income Dynamics (PSID) for household-level stock market participation and the Federal Election Commission (FEC) Campaign Finance data for state-level political orientation. Additional datasets are employed for robustness checks in later sections when necessary (see \Cref{sec:robust_x} and \Cref{sec:robust_y}).
+
+\subsection{Stock Market Participation Data}
+\label{sec:data_psid}
+
+For household-level stock market participation, the data is from the Panel Study of Income Dynamics (PSID) \citep{PSID2024}. The PSID provides longitudinal, household-level data detailing state of residence, stock ownership, wealth, and demographic information. The sample period covers 1999 to 2023 at a biennial frequency in odd years, restricted by availability of stock holdings data. 
+
+The dataset features a panel structure constructed at the family level (i = family, t = year). A representative person is interviewed from each family. Income, wealth, and stock market holding (which explicitly excludes retirement accounts but includes mutual funds) are aggregated at the family unit. Demographic characteristics—such as education and gender are extracted for the representative person. 
+
+One limiting characteristic of the PSID is its oversampling of low-income families. However, this bias is not a concern for this analysis. First, the primary focus is on the relationship between political orientation and stock market participation rather than estimating population-level participation rates. For the same reasons, sampling weights are not applied in the regression analyses. Second, the main regressions control for income and wealth at the household level.
+
+For each family-year observation, the following variables are constructed:
+\begin{itemize}
+    \item \texttt{stockhold}: binary indicator equal to 1 if the family has direct holdings in stocks (including mutual funds with stocks, excluding retirement accounts) and 0 otherwise.
+    \item \texttt{finassets}: total financial assets, calculated as the sum of cash, bonds, and stocks.
+    \item \texttt{stockshare}: the share of financial assets held in stocks, calculated as the ratio of stock holdings to total financial assets, capped at 1.
+    \item \texttt{ln(income)}: natural logarithm of total family income.    
+    \item \texttt{ln(wealth)}: natural logarithm of total family wealth.
+    \item \texttt{college}: binary indicator equal to 1 if the representative person has a college degree and 0 otherwise.
+    \item \texttt{age}: age of the representative person.
+    \item \texttt{male}: binary indicator equal to 1 if the representative person is male and 0 otherwise.
+\end{itemize}
+See \Cref{sec:appendix_psid} for detailed variable construction processes and the specific PSID variable codes used.
+
+
+\subsection{Political Data}
+\label{sec:data_political}
+
+To proxy state-level political orientation, this paper follows \citet{meeuwis2022} and uses the Federal Election Commission (FEC) Campaign Finance data \citep{FEC2024}.
+
+Individual contributions to presidential candidates and political parties are obtained from the FEC campaign finance data. \citet{meeuwis2022} uses the same data to construct zip-code level political orientations and connects them to propreitary brokerage data with zip-code geographic granularity. In this paper, the FEC data is used to construct a state-level political orientation variable, which serves as the main independent variable in the analysis. Specifically, valid contributions made to committees that directly support specific candidates or parties are aggregated at the state-year level. Contributions supporting lost primary candidates or specific issues are excluded. See \Cref{sec:appendix_fecscreen} for a detailed description of the variable construction process. After aggregating, two measures of political orientation are constructed: (1) STDIR(A) from the total amount of contributions and (2) STDIR(N) from the total number of contributions.
+
+$$
+STDIR(A)_{s,t} = 2 \times \left( \frac{\text{Total Contribution Amount to Republican Committees}_{s,t}}{\text{Total Contribution Amount}_{s,t}} \right) - 1
+$$
+$$
+STDIR(N)_{s,t} = 2 \times \left( \frac{\text{Total Contribution Number to Republican Committees}_{s,t}}{\text{Total Contribution Number}_{s,t}} \right) - 1
+$$
+
+Both measures are normalized to be bounded between -1 and 1, where -1 indicates a fully Democratic-leaning state and 1 indicates a fully Republican-leaning state. Such normalization is motivated for the ease of constructing the alignment variable. Defining FEDIR, the federal political direction variable, as 1 during Republican presidencies and -1 during Democratic presidencies, the state-federal alignment variable (STALG) is constructed as the interaction between the state and federal political directions:
+$$
+STALG_{s,t} = STDIR_{s,t} \times FEDIR_t
+$$
+A positive STALG value denotes political alignment between the state and the federal executive branch (Republican-leaning state under a Republican president or Democratic-leaning state under a Democratic president), while a negative value signifies misalignment.
+
+\subsection{Summary Statistics}
+\label{sec:summary_stats}
+
+\begin{table}[htbp]
+    \caption{Summary Statistics}
+    \label{tab:1}
+
+    \begin{minipage}{\textwidth}
+        \small This table presents summary statistics for the main variables used in the analysis. The sample is a panel dataset covering families in the PSID dataset during 1999-2023. PSID variables are at the family-year level, while the FEC variables are at the state-year level.
+    \end{minipage}
+
+    \vspace{1ex}
+
+    \small 
+
+    \input{tables/tb1.tex}
+\end{table}
+
+\Cref{tab:1} presents the summary statistics for the main variables used in the analysis. The sample contains up to $111,231$ observations, though variables such as Income ($N=109,875$) and Wealth ($N=86,781$) exhibit slightly lower counts due to missing data. 
+
+Financially, the stockholding indicator (1(Stockhold)) demonstrates a mean of $0.152$, implying that $15.2\%$ of the individuals in the sample participate in the stock market. This is in line with the commonly cited estimates from the Survey of Consumer Finances (SCF). Excluding retirement accounts, the SCF reports that the percentage of American families with direct stock holdings was 15\% in 2019 and 21\% in 2022 \citep{SCF2023}. Income and Wealth variables show high variation and skewness, which is typical for financial data. Accordingly, these variables are log-transformed in the regression analyses.
+
+The demographic composition of the sample shows an average age of $45.7$ years (Age mean $= 45.706$) and an educational attainment rate where $30.0\%$ of respondents hold a college degree (1(College) mean $= 0.300$). This educational metric is relatively proximate, though slightly lower. The U.S. Census Bureau Educational Attainment statistics show that around half of American adults aged 25 and older have obtained an associate degree or higher \citep{Census2024}. The sample is disproportionately male at $68.5\%$ (1(Male) mean $= 0.685$). This could be a result of male partners being more likely to be the representative person being interviewed, rather than a overrepresentation of men in the PSID sample.
+
+Although the summary averages reveal some deviations from aggregate U.S. population statistics, the exact baseline levels of these variables are not critical to the integrity of this study. The primary objective of the empirical framework is to identify the underlying relationships and marginal effects among these covariates. As long as there is sufficient variation within the sample to capture these dynamics the representativeness of the point estimates remains secondary to the structural relationships being analyzed.
+
+The FEC contribution variables are measured at the state-year level. The state-level political direction (STDIR) captures the political leaning of a state based on Federal Election Commission (FEC) data, bounded between -1 (fully Democratic) and 1 (fully Republican). The direction measures exhibit slight Republican leans, with means of 0.152 and 0.068, respectively. Both measures show substantial variation, as evidenced by their standard deviations ranging from 0.179 to 0.418.
+
+The federal political direction (FEDIR) is an indicator variable that takes a value of 1 during a Republican presidency and -1 during a Democratic presidency. The variable has a mean of -0.093, which simply reflects that within this specific 1999-2023 panel dataset, slightly more family-year observations occurred under Democratic administrations than Republican ones.
+
+Finally, the state-federal alignment variable (STALG) represents the interaction between the state's political leaning and the president's party (STDIR × FEDIR). A positive STALG value denotes political alignment between the state and the federal executive branch (e.g., a Republican-leaning state under a Republican president), while a negative value signifies misalignment. The means for STALG(A) and STALG(N) are -0.022 and -0.039, respectively. These near-zero averages indicate that, across the sample period, respondents' state-level political environments were relatively evenly split between being aligned and misaligned with the party in control of the White House.

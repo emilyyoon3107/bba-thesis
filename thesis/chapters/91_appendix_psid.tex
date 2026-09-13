@@ -1,0 +1,28 @@
+% !TEX root = ../main.tex
+
+\section{Construction of PSID Variables}
+\label{sec:appendix_psid}
+
+This section describes in detail how the varaibles from the PSID dataset were constructed. The underlying data is sourced from the Panel Study of Income Dynamics (PSID) Family-Level files, spanning the biennial survey waves from 1999 to 2023 (odd years).The equations below formally define how the final analytical variables are mapped and calculated directly as a function of the raw, reshaped PSID base variables. \Cref{tab:A1} details the specific variable codes across all waves used to construct the base variables.
+
+$$
+\begin{aligned}
+\text{stockhold} &= \mathbf{1}(\text{wthstckimptf} = 1) \\[8pt]
+\text{finassets} &= 
+\begin{cases} 
+\text{wthcashbondimpval} + \text{wthstckimpval}, & ( t \le 2017 ) \\
+\text{wthcashimpval} + \text{wthbondimpval} + \text{wthstckimpval}, & ( t \ge 2019 ) 
+\end{cases} \\[8pt]
+\text{stockshare} &= \min \left( \frac{\text{wthstckimpval}}{\text{finassets}}, 1 \right) \quad \text{for finassets} > 0 \\[8pt]
+\text{stockhold\_ira} &= \mathbf{1}(\text{retirementalloc} \in \{1, 3\}) \\[8pt]
+\text{stockhold\_pen} &= \mathbf{1}(\text{pensionallochd} \in \{1, 2\} \lor \text{pensionallocsp} \in \{1, 2\}) \\[8pt]
+\text{stockhold\_tot} &= \mathbf{1}(\text{stockhold} = 1 \lor \text{stockhold\_ira} = 1 \lor \text{stockhold\_pen} = 1) \\[8pt]
+\text{lnincome} &= \ln(\text{incfamilytotal}) \quad \text{for incfamilytotal} > 0 \\[8pt]
+\text{lnwealth} &= \ln(\text{wthtotinclheq}) \quad \text{for wthtotinclheq} > 0 \\[8pt]
+\text{college} &= \mathbf{1}(\text{eduhdcoldegtf} = 1) \\[8pt]
+\text{age} &= \text{agehd} \quad \text{for agehd} \neq 999 \\[8pt]
+\text{male} &= \mathbf{1}(\text{sexhd} = 1)
+\end{aligned}
+$$
+
+\input{tables/tbA1.tex}
