@@ -1,0 +1,32 @@
+{
+\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\begin{tabular*}{\textwidth}{l@{\extracolsep{\fill}}*{4}{c}}
+\toprule
+          &\multicolumn{2}{c}{LPM}              &\multicolumn{2}{c}{Probit}           \\
+          &\multicolumn{1}{c}{(1)}&\multicolumn{1}{c}{(2)}&\multicolumn{1}{c}{(3)}&\multicolumn{1}{c}{(4)}\\
+          &\multicolumn{1}{c}{stockhold}&\multicolumn{1}{c}{stockhold}&\multicolumn{1}{c}{stockhold}&\multicolumn{1}{c}{stockhold}\\
+\midrule
+ln(Income)&    0.034\sym{***}&    0.030\sym{***}&    0.032\sym{***}&    0.029\sym{***}\\
+          &  (0.002)         &  (0.002)         &  (0.002)         &  (0.002)         \\
+\addlinespace
+ln(Wealth)&    0.116\sym{***}&    0.115\sym{***}&    0.157\sym{***}&    0.153\sym{***}\\
+          &  (0.002)         &  (0.002)         &  (0.002)         &  (0.002)         \\
+\addlinespace
+1(College)&    0.146\sym{***}&    0.143\sym{***}&    0.110\sym{***}&    0.108\sym{***}\\
+          &  (0.003)         &  (0.003)         &  (0.003)         &  (0.003)         \\
+\addlinespace
+Age       &    0.009\sym{***}&    0.008\sym{***}&   -0.006\sym{***}&   -0.006\sym{***}\\
+          &  (0.001)         &  (0.001)         &  (0.001)         &  (0.001)         \\
+\addlinespace
+1(Male)   &   -0.004         &   -0.004         &   -0.009\sym{***}&   -0.010\sym{***}\\
+          &  (0.003)         &  (0.003)         &  (0.003)         &  (0.003)         \\
+\midrule
+\(N\)     &    86066         &    86066         &    86066         &    86066         \\
+State FE  &       No         &      Yes         &       No         &      Yes         \\
+Year FE   &      Yes         &      Yes         &      Yes         &      Yes         \\
+State Joint Stat.&        -         &  1.8e+01         &        -         &  4.9e+02         \\
+State P-Value&        -         &  6.e-153         &        -         &  2.0e-73         \\
+R-sq      &    0.206         &    0.212         &    0.262         &    0.268         \\
+\bottomrule
+\end{tabular*}
+}

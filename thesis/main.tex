@@ -1,0 +1,110 @@
+\documentclass[12pt, a4paper]{article}
+
+% --- Essential Packages ---
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amssymb} 
+\usepackage{graphicx}         
+\usepackage{booktabs}         
+\usepackage{pdflscape}
+
+% --- SSRN Document Styling ---
+\usepackage[margin=1.25in]{geometry} % Generous margins
+\usepackage{setspace}
+\onehalfspacing % or \doublespacing for a draft aesthetic
+
+% --- SSRN Citation Style ---
+% \usepackage{natbib}
+% \bibliographystyle{apalike} 
+\usepackage[backend=biber, style=apa, natbib=true]{biblatex}
+\addbibresource{references.bib}
+
+% --- Hyperlinks ---
+\usepackage[colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue]{hyperref}
+
+% --- Clever References (Load AFTER hyperref) ---
+\usepackage{cleveref}
+
+\graphicspath{{images/}}
+
+% --- Custom Commands ---
+\usepackage{todonotes}
+\newcommand{\extratodo}[1]{\todo[color=blue!30,caption={}]{{\color{blue}#1}}}
+\newcommand{\maintodo}[1]{\todo[color=blue!30,inline,caption={}]{{\color{blue}#1}}}
+
+% --- Appendix ---
+\usepackage[title,toc]{appendix}
+
+% --- Pretty tables ---
+\usepackage{caption}
+\captionsetup[table]{labelfont=bf, textfont=bf}
+\captionsetup[figure]{labelfont=bf, textfont=bf}
+\usepackage{subcaption}
+% 1. Create a custom format that says "Panel" before the letter
+\DeclareCaptionLabelFormat{panel}{Panel #2}
+% 2. Apply it to subtables, make it left-aligned (raggedright), and use a colon
+\captionsetup[subtable]{
+    labelformat=panel,
+    labelsep=colon,
+    justification=raggedright,
+    singlelinecheck=false, % Forces left-alignment even if the title is short
+    font=normalsize % Keeps the font size consistent
+}
+% 3. Ensure the counter uses uppercase letters (A, B, C)
+\renewcommand\thesubtable{\Alph{subtable}}
+% 4. Wide tables: sideways
+\usepackage{rotating}
+% 5. Wrapped tables
+\usepackage{tabularx}
+
+
+% --- Title Page Information ---
+\title{\textbf{
+    The Geography of Ideology: A Simpson’s Paradox in Stock Market Participation
+}}
+\author{
+    Hyojeong Yoon \\
+    \textit{Seoul National University}
+}
+\date{\today}
+
+\begin{document}
+
+\pagenumbering{roman} % Gives the title page a hidden roman numeral for hyperref
+
+\maketitle
+
+% --- Abstract & Metadata ---
+\begin{abstract}
+    \noindent Stock market participation is crucial for allocative efficiency across the economy and serves as a primary engine of wealth accumulation for the layperson, yet persistent geographic disparities in participation rates remain a puzzle. This paper uncovers a Simpson’s paradox within participation rate variation across U.S. states. While prior literature suggest individual-level Republican preferences correlate with a higher likelihood of investing, this paper shows that Democratic-leaning states exhibit a significantly higher baseline rate of stock market entry. Furthermore, state-level political environments act as a structural barrier to participation rather than reflecting differences in risk preferences. By proposing potential underlying channels, this study contributes to the intersection of household finance and political economics and opens avenues for further research.
+
+\end{abstract}
+
+\thispagestyle{empty} % Removes the page number from the title page
+\newpage
+\pagenumbering{arabic} 
+
+% --- Chapters ---
+\input{chapters/01_introduction}
+\input{chapters/02_litreview}
+\input{chapters/03_methodology}
+\input{chapters/10_results}
+\input{chapters/20_reconcilation}
+\input{chapters/30_channels}
+\input{chapters/80_conclusion}
+
+% --- Bibliography ---
+% exported from Zotero with Better BibTeX
+\newpage
+\printbibliography
+
+% --- Appendices ---
+\newpage
+\begin{appendices}
+\crefalias{section}{appendix}
+\counterwithin{table}{section}
+\counterwithin{figure}{section}
+\input{chapters/91_appendix_psid}
+\input{chapters/92_appendix_fecscreen}
+\end{appendices}
+
+\end{document}

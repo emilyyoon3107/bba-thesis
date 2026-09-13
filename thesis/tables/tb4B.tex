@@ -1,0 +1,42 @@
+{
+\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\begin{tabular}{l*{6}{c}}
+\toprule
+                    &\multicolumn{1}{c}{(1)}&\multicolumn{1}{c}{(2)}&\multicolumn{1}{c}{(3)}&\multicolumn{1}{c}{(4)}&\multicolumn{1}{c}{(5)}&\multicolumn{1}{c}{(6)}\\
+                    &\multicolumn{1}{c}{stockshare}&\multicolumn{1}{c}{stockshare}&\multicolumn{1}{c}{stockshare}&\multicolumn{1}{c}{stockshare}&\multicolumn{1}{c}{stockshare}&\multicolumn{1}{c}{stockshare}\\
+\midrule
+ln(Income)          &      -0.041\sym{***}&      -0.041\sym{***}&      -0.041\sym{***}&      -0.041\sym{***}&      -0.041\sym{***}&      -0.041\sym{***}\\
+                    &     (0.005)         &     (0.005)         &     (0.006)         &     (0.006)         &     (0.005)         &     (0.005)         \\
+\addlinespace
+ln(Wealth)          &       0.106\sym{***}&       0.106\sym{***}&       0.106\sym{***}&       0.105\sym{***}&       0.106\sym{***}&       0.106\sym{***}\\
+                    &     (0.008)         &     (0.008)         &     (0.008)         &     (0.008)         &     (0.008)         &     (0.008)         \\
+\addlinespace
+college=1           &       0.011         &       0.011         &       0.011         &       0.011         &       0.011         &       0.011         \\
+                    &     (0.009)         &     (0.009)         &     (0.009)         &     (0.009)         &     (0.009)         &     (0.009)         \\
+\addlinespace
+Age                 &       0.014\sym{**} &       0.014\sym{**} &       0.015\sym{**} &       0.015\sym{**} &       0.014\sym{**} &       0.014\sym{**} \\
+                    &     (0.006)         &     (0.006)         &     (0.006)         &     (0.006)         &     (0.006)         &     (0.006)         \\
+\addlinespace
+male=1              &       0.002         &       0.002         &       0.003         &       0.003         &       0.002         &       0.002         \\
+                    &     (0.009)         &     (0.009)         &     (0.009)         &     (0.009)         &     (0.009)         &     (0.009)         \\
+\addlinespace
+STDIR(A)            &       0.024\sym{*}  &                     &                     &                     &       0.024\sym{*}  &                     \\
+                    &     (0.013)         &                     &                     &                     &     (0.014)         &                     \\
+\addlinespace
+STDIR(N)            &                     &       0.024         &                     &                     &                     &       0.023         \\
+                    &                     &     (0.018)         &                     &                     &                     &     (0.019)         \\
+\addlinespace
+STALG(A)            &                     &                     &      -0.005         &                     &      -0.002         &                     \\
+                    &                     &                     &     (0.007)         &                     &     (0.008)         &                     \\
+\addlinespace
+STALG(N)            &                     &                     &                     &      -0.008         &                     &      -0.005         \\
+                    &                     &                     &                     &     (0.009)         &                     &     (0.010)         \\
+\addlinespace
+FEDIR               &                     &                     &                     &                     &      -0.047\sym{***}&      -0.041\sym{***}\\
+                    &                     &                     &                     &                     &     (0.008)         &     (0.011)         \\
+\midrule
+Obs.                &      15,999         &      15,999         &      15,999         &      15,999         &      15,999         &      15,999         \\
+R-sq                &       0.023         &       0.023         &       0.023         &       0.023         &       0.023         &       0.023         \\
+\bottomrule
+\end{tabular}
+}
